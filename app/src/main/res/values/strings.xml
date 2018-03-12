@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name" translatable="false">ZooQuiz</string>
+    <!-- links for Answers -->
+    <string name="link_lion"><![CDATA[<a href=\'https://cbs.umn.edu/research/labs/lionresearch/faq\'>Read more…</a>]]></string>
+    <string name="link_hummingbird"><![CDATA[<a href=\'https://www.thespruce.com/how-hummingbirds-fly-386446\'>Read more…</a>]]></string>
+    <string name="link_marmoset"><![CDATA[<a href=\'https://en.wikipedia.org/wiki/Common_marmoset#Communication\'>Read more…</a>]]></string>
+    <string name="link_pelican"><![CDATA[<a href=\'https://en.wikipedia.org/wiki/Pelican\'>Read more…</a>]]></string>
+    <string name="link_ratite"><![CDATA[<a href=\'https://en.wikipedia.org/wiki/Flightless_bird#Ratites\'>Read more…</a>]]></string>
+    <string name="link_giraffe"><![CDATA[<a href=\'https://en.wikipedia.org/wiki/Giraffe#Neck\'>Read more…</a>]]></string>
+    <string name="link_elephant"><![CDATA[<a href=\'https://en.wikipedia.org/wiki/Elephant#Ears\'>Read more…</a>]]></string>
+    <string name="link_snake"><![CDATA[<a href=\'https://en.wikipedia.org/wiki/Snake#Venom\'>Read more…</a>]]></string>
+    <string name="link_tiger"><![CDATA[<a href=\'https://en.wikipedia.org/wiki/Tiger#Characteristics\'>Read more…</a>]]></string>
+    <string name="link_leopard"><![CDATA[<a href=\'https://en.wikipedia.org/wiki/Leopard#Characteristics\'>Read more…</a>]]></string>
+    <!-- button and EditText hint -->
+    <string name="reset">Reset</string>
+    <string name="edit_answer">Answer here…</string>
+    <string name="submit">Submit!</string>
+    <string name="play_button">Play!</string>
+    <!-- Questions and answers -->
+    <string name="question_lion">Why do lions have manes?</string>
+    <string name="answer_lion_protection">The mane protects the neck during fights against other males.</string>
+    <string name="answer_lion_fitness">The mane serves signals about the lion\'s fitness. Darker and bigger manes are more attractive for lionesses</string>
+    <string name="answer_lion_temperature">The mane\'s size depends on the environmental temperature and it\'s used to control the body temperature of the male lion.</string>
+    <string name="answer_lion_fighting">The mane signals information to other males about the fighting abilities.</string>
+    <string name="question_hummingbird">How do hummingbirds fly backwards?</string>
+    <string name="answer_hummingbird_helicopter">Hummingbirds move their wings like a helicopter.</string>
+    <string name="answer_hummingbird_myth">This is a myth. Hummingbirds cannot fly backwards.</string>
+    <string name="answer_hummingbird_eight_beat">Hummingbirds rotate their wings during the for- and backward wing beat.</string>
+    <string name="answer_hummingbird_speed">The high bear frequency of the wings allows the hummingbirds to fly backwards.</string>
+    <string name="question_marmoset">Which animal can you here?</string>
+    <string name="answer_common_marmoset">Common marmoset (monkey)</string>
+    <string name="answer_marmoset_nightingale">White-bellied redstart (nightingale)</string>
+    <string name="answer_marmoset_mouse">Peters\' mouse</string>
+    <string name="answer_marmoset_songbird">Mountain chiffchaff (songbird)</string>
+    <string name="question_pelican">How much water can a pelican beak hold?</string>
+    <string name="answer_pelican_5l">5 litres</string>
+    <string name="answer_pelican_9l">9 litres</string>
+    <string name="answer_pelican_13l">13 litres</string>
+    <string name="answer_pelican_2l">2 litres</string>
+    <string name="question_ratite">Name two big flightless birds (ratite, not extinct):</string>
+    <string name="question_giraffe">How many vertebrae have the giraffe\'s neck?</string>
+    <string name="answer_giraffe_17">17</string>
+    <string name="answer_giraffe_11">11</string>
+    <string name="answer_giraffe_9">9</string>
+    <string name="answer_giraffe_7">7</string>
+    <string name="answer_giraffe_5">5</string>
+    <string name="question_elephant">Why do elephants have big ears?</string>
+    <string name="answer_elephant_communication">They use only their ears to communicate over larger distances. Bigger ears can be better seen.</string>
+    <string name="answer_elephant_hearing">Because of the big ears, elephants can hear a broader frequency spectrum of tones.</string>
+    <string name="answer_elephant_attractive">Bigger ears are more attractive to other elephants, because it indicates a greater fitness.</string>
+    <string name="answer_elephant_temperature">The ears are used to regulate the body temperature. The heat loss can be raised by flapping.</string>
+    <string name="question_tiger">Why are tigers black and reddish-orange striped?</string>
+    <string name="answer_tiger_protection">The stripes confuse mosquitos, which transmit diseases.</string>
+    <string name="answer_tiger_camouflage">Tigers live in jungles and long grass, so the stripes help to blend into the surroundings.</string>
+    <string name="answer_tiger_sight">Most of the tiger\'s prey do not see colors. The orange and black shaded fur may look like shadows for those animals.</string>
+    <string name="answer_tiger_temperature">The black and orange stripes generate a temperature gradient, which leads to air stream. This regulates the body temperature.</string>
+    <string name="question_leopard">What kind of animal is that?</string>
+    <string name="title_background">Title background</string>
+    <string name="toast_image">toast_image</string>
+    <string name="double_submit">You already submitted your Answers. Please reset the quiz first, before you try again!</string>
+    <string name="submit_toast">You got %1$d out of %2$d correct.</string>
+    <string name="perfect">Perfect!</string>
+    <string name="try_again">Try again!</string>
+    <string name="enter_your_name">Enter your name:</string>
+    <string name="your_name">Your name...</string>
+    <string name="start_quiz">Start quiz</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+</resources>

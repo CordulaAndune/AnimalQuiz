@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:top="2dp"
+        android:left="2dp">
+        <shape>
+            <solid android:color="@color/colorButtonBorder" />
+            <corners android:radius="@dimen/corner_radius" />
+        </shape>
+    </item>
+    <item
+        android:right="2dp"
+        android:bottom="2dp">
+        <shape>
+            <solid android:color="@color/buttonBackground" />
+            <stroke
+                android:width="4dp"
+                android:color="@color/colorButtonBorder" />
+            <corners android:radius="@dimen/corner_radius" />
+            <padding android:top="@dimen/inner_margin"
+                android:bottom="@dimen/inner_margin"
+                android:left="@dimen/inner_margin"
+                android:right="@dimen/inner_margin"/>
+        </shape>
+    </item>
+</layer-list>

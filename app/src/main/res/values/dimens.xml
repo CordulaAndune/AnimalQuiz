@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="outer_padding">16dp</dimen>
+    <dimen name="inner_margin">8dp</dimen>
+    <dimen name="button_margin">4dp</dimen>
+    <dimen name="questionTextSize">24sp</dimen>
+    <dimen name="answerTextSize">16sp</dimen>
+    <dimen name="corner_radius">3dp</dimen>
+</resources>
