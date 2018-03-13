@@ -1,25 +1,18 @@
 package de.cordulagloge.android.animalquiz;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseIntArray;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.cordulagloge.android.animalquiz.databinding.ActivityQuizBinding;
@@ -30,10 +23,10 @@ import de.cordulagloge.android.animalquiz.databinding.QuestionRadiobuttonLayoutB
 public class QuizActivity extends AppCompatActivity {
 
     private int questionNumber;
+    private int numberOfQuestions;
     private int[][] questionsArray;
     private boolean[] hasCorrectAnswered;
     private HashMap<Integer, int[][]> answerDictionary;
-    private HashMap<Integer, String[]> correctAnswersDictionary;
     private ActivityQuizBinding quizBindings;
     private QuestionRadiobuttonLayoutBinding radioButtonViewBinding;
     private QuestionCheckboxLayoutBinding checkBoxViewBinding;
@@ -58,8 +51,8 @@ public class QuizActivity extends AppCompatActivity {
                         {3, R.string.question_leopard, 1, R.drawable.leopard},
                         {1, R.string.question_pelican, 0, 0}
                 };
-
-        hasCorrectAnswered = new boolean[questionsArray.length];
+        numberOfQuestions = questionsArray.length;
+        hasCorrectAnswered = new boolean[numberOfQuestions];
 
         // Hashmap for the answers
         // String of answer + correctness with 0 = false, 1= correct
@@ -192,10 +185,8 @@ public class QuizActivity extends AppCompatActivity {
      * get the next question and set new layout
      */
     private void setNextQuestion() {
-        //TODO: get checked answer and compare if is correct
         if (questionNumber >= 0) {
             checkAnswers(questionsArray[questionNumber][1], questionsArray[questionNumber][0]);
-            Log.i("QuizActivity", "Last question correct answered? " + hasCorrectAnswered[questionNumber]);
         }
         //TODO: set for last question
         questionNumber++;
@@ -214,6 +205,15 @@ public class QuizActivity extends AppCompatActivity {
             case (3):
                 showEditText(currentQuestion, media);
                 break;
+        }
+        if (questionNumber == numberOfQuestions - 1) {
+            quizBindings.nextButton.setText(R.string.submit);
+            quizBindings.nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    submitAnswers();
+                }
+            });
         }
     }
 
@@ -259,6 +259,18 @@ public class QuizActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    private void submitAnswers() {
+        int score = 0;
+        for (boolean isCorrect : hasCorrectAnswered) {
+            if (isCorrect) {
+                score++;
+            }
+        }
+        Toast submitToast = Toast.makeText(this, "Your score is " + score, Toast.LENGTH_SHORT);
+        submitToast.show();
+        resetQuiz();
     }
 
     /**
