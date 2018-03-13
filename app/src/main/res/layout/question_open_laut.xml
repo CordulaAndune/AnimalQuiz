@@ -12,6 +12,7 @@
             android:layout_weight="1"/>
 
         <EditText
+            android:id="@+id/answer"
             style="@style/EditTextStyle"
             android:hint="@string/edit_answer"
             android:layout_weight="12"

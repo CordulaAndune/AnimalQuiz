@@ -66,4 +66,10 @@
     <string name="start_quiz">Start quiz</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
+    <string name="answer_ratite_ostrich">ostrich</string>
+    <string name="answer_ratite_emu">emu</string>
+    <string name="answer_ratite_kiwi">kiwi</string>
+    <string name="answer_ratite_cassowary">cassowary</string>
+    <string name="answer_ratite_rhea">rhea</string>
+    <string name="answer_leopard">leopard</string>
 </resources>
