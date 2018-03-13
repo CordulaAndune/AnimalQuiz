@@ -228,7 +228,7 @@ public class QuizActivity extends AppCompatActivity {
                 int countChild = checkBoxViewBinding.groupCheckboxes.getChildCount();
                 for (int index = 0; index < countChild; index++){
                     CheckBox currentCheckBox = (CheckBox) checkBoxViewBinding.groupCheckboxes.getChildAt(index);
-                    int currentAnswer = currentCheckBox.isChecked()? 0:1;
+                    int currentAnswer = currentCheckBox.isChecked()? 1:0;
                     int correctAnswer = (int) currentCheckBox.getTag();
                     if (currentAnswer != correctAnswer){
                         hasCorrectAnswered[questionNumber] = false;
