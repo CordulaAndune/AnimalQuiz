@@ -171,6 +171,10 @@ public class QuizActivity extends AppCompatActivity {
             questionPicture.setAdjustViewBounds(true);
             questionPicture.setTag("Additional View");
             questionPicture.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            float density = this.getResources().getDisplayMetrics().density;
+            int paddingDp = (int) getResources().getDimension(R.dimen.inner_margin);
+            int paddingPixel = (int) (paddingDp * density);
+            questionPicture.setPadding(paddingPixel, paddingPixel, paddingPixel, paddingPixel);
             openQuestionViewBinding.rootOpenQuestion.addView(questionPicture, 1);
         }
         // TODO: add MediaPlayer: seekbar and play/pause button

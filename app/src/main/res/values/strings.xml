@@ -59,7 +59,7 @@
     <string name="toast_image">toast_image</string>
     <string name="double_submit">You already submitted your Answers. Please reset the quiz first, before you try again!</string>
     <string name="submit_toast">%1$s!\nYou got %2$d out of %3$d correct.</string>
-    <string name="try_again">Try again,\s</string>
+    <string name="try_again">Try again,\w</string>
     <string name="enter_your_name">Enter your name:</string>
     <string name="your_name">Your name…</string>
     <string name="start_quiz">Start quiz</string>
@@ -71,6 +71,7 @@
     <string name="answer_ratite_cassowary">cassowary</string>
     <string name="answer_ratite_rhea">rhea</string>
     <string name="answer_leopard">leopard</string>
-    <string name="congratulations">Congratulations,\s</string>
-    <string name="good_work">Good work,\s</string>
+    <string name="congratulations">Congratulations,\w</string>
+    <string name="good_work">Good work,\w</string>
+    <string name="enter_name_before_start">Please enter your name, before you start the quiz!</string>
 </resources>

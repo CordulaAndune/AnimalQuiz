@@ -34,14 +34,16 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/outer_padding</item>
         <item name="android:background">@drawable/edittext_background</item>
+        <item name="android:textSize">@dimen/answerTextSize</item>
     </style>
 
     <style name="Answers" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/outer_padding</item>
+        <item name="android:layout_margin">@dimen/inner_margin</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">@dimen/answerTextSize</item>
+        <item name="android:paddingLeft">@dimen/inner_margin</item>
     </style>
 
 </resources>
