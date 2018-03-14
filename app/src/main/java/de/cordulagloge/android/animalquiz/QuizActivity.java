@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,13 @@ import de.cordulagloge.android.animalquiz.databinding.ActivityQuizBinding;
 import de.cordulagloge.android.animalquiz.databinding.QuestionCheckboxLayoutBinding;
 import de.cordulagloge.android.animalquiz.databinding.QuestionOpenLautBinding;
 import de.cordulagloge.android.animalquiz.databinding.QuestionRadiobuttonLayoutBinding;
+import de.cordulagloge.android.animalquiz.databinding.ToastViewBinding;
 
 public class QuizActivity extends AppCompatActivity {
 
     private int questionNumber;
     private int numberOfQuestions;
+    private String playersName;
     private int[][] questionsArray;
     private boolean[] hasCorrectAnswered;
     private HashMap<Integer, int[][]> answerDictionary;
@@ -37,6 +40,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         quizBindings = DataBindingUtil.setContentView(this, R.layout.activity_quiz);
         questionNumber = -1;
+        Intent startIntent = getIntent();
+        playersName = startIntent.getStringExtra("playersName");
 
         // Array for the questions
         // QuestionType, Question, picture(1) or mp3(2)
@@ -90,7 +95,6 @@ public class QuizActivity extends AppCompatActivity {
                 setNextQuestion();
             }
         });
-
         quizBindings.resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +102,8 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
     }
+
+    //TODO: save oninstance change
 
     /**
      * show single choice question with radio buttons
@@ -187,8 +193,8 @@ public class QuizActivity extends AppCompatActivity {
     private void setNextQuestion() {
         if (questionNumber >= 0) {
             checkAnswers(questionsArray[questionNumber][1], questionsArray[questionNumber][0]);
+            Log.i("QuizActivity", "Last answer" + hasCorrectAnswered[questionNumber]);
         }
-        //TODO: set for last question
         questionNumber++;
         int currentQuestion = questionsArray[questionNumber][1];
         int media = questionsArray[questionNumber][2];
@@ -220,21 +226,20 @@ public class QuizActivity extends AppCompatActivity {
     private void checkAnswers(int answeredQuestionId, int questionType) {
         switch (questionType) {
             case (1):
-                    int checkedButton = radioButtonViewBinding.answerGroup.getCheckedRadioButtonId();
-                    int correctButton = radioButtonViewBinding.answerGroup.findViewWithTag(1).getId();
-                    hasCorrectAnswered[questionNumber]= checkedButton == correctButton;
+                int checkedButton = radioButtonViewBinding.answerGroup.getCheckedRadioButtonId();
+                int correctButton = radioButtonViewBinding.answerGroup.findViewWithTag(1).getId();
+                hasCorrectAnswered[questionNumber] = checkedButton == correctButton;
                 break;
             case (2):
                 int countChild = checkBoxViewBinding.groupCheckboxes.getChildCount();
-                for (int index = 0; index < countChild; index++){
+                for (int index = 0; index < countChild; index++) {
                     CheckBox currentCheckBox = (CheckBox) checkBoxViewBinding.groupCheckboxes.getChildAt(index);
-                    int currentAnswer = currentCheckBox.isChecked()? 1:0;
+                    int currentAnswer = currentCheckBox.isChecked() ? 1 : 0;
                     int correctAnswer = (int) currentCheckBox.getTag();
-                    if (currentAnswer != correctAnswer){
+                    if (currentAnswer != correctAnswer) {
                         hasCorrectAnswered[questionNumber] = false;
                         break;
-                    }
-                    else {
+                    } else {
                         hasCorrectAnswered[questionNumber] = true;
                     }
                 }
@@ -246,14 +251,13 @@ public class QuizActivity extends AppCompatActivity {
                 int numberOfCorrectAnswers = 0;
                 for (int index = 0; index < currentAnswers.length; index++) {
                     String correctAnswer = getString(currentAnswers[index][0]);
-                    if (answer.contains(correctAnswer)){
+                    if (answer.contains(correctAnswer)) {
                         numberOfCorrectAnswers++;
                     }
-                    if (numberOfCorrectAnswers == neededCorrect){
+                    if (numberOfCorrectAnswers == neededCorrect) {
                         hasCorrectAnswered[questionNumber] = true;
                         break;
-                    }
-                    else {
+                    } else {
                         hasCorrectAnswered[questionNumber] = false;
                     }
                 }
@@ -262,13 +266,28 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void submitAnswers() {
+        checkAnswers(questionsArray[questionNumber][1], questionsArray[questionNumber][0]);
         int score = 0;
         for (boolean isCorrect : hasCorrectAnswered) {
             if (isCorrect) {
                 score++;
             }
         }
-        Toast submitToast = Toast.makeText(this, "Your score is " + score, Toast.LENGTH_SHORT);
+        Toast submitToast = new Toast(this);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ToastViewBinding toastViewLayoutBinding = ToastViewBinding.inflate(inflater);
+        submitToast.setView(toastViewLayoutBinding.rootToast);
+        StringBuilder toastTextBuilder = new StringBuilder();
+        if (score > numberOfQuestions / 0.8) {
+            toastTextBuilder.append(getString(R.string.congratulations));
+        } else if (score < numberOfQuestions / 0.2) {
+            toastTextBuilder.append(getString(R.string.try_again));
+        } else {
+            toastTextBuilder.append(getString(R.string.good_work));
+        }
+        toastTextBuilder.append(getString(R.string.submit_toast, playersName, score, numberOfQuestions));
+        toastViewLayoutBinding.toastText.setText(toastTextBuilder.toString());
+        submitToast.setDuration(Toast.LENGTH_SHORT);
         submitToast.show();
         resetQuiz();
     }
