@@ -3,7 +3,9 @@ package de.cordulagloge.android.animalquiz;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import de.cordulagloge.android.animalquiz.databinding.ActivityQuizBinding;
+import de.cordulagloge.android.animalquiz.databinding.AudioplayerLayoutBinding;
 import de.cordulagloge.android.animalquiz.databinding.QuestionCheckboxLayoutBinding;
 import de.cordulagloge.android.animalquiz.databinding.QuestionOpenLautBinding;
 import de.cordulagloge.android.animalquiz.databinding.QuestionRadiobuttonLayoutBinding;
@@ -34,6 +37,8 @@ public class QuizActivity extends AppCompatActivity {
     private QuestionRadiobuttonLayoutBinding radioButtonViewBinding;
     private QuestionCheckboxLayoutBinding checkBoxViewBinding;
     private QuestionOpenLautBinding openQuestionViewBinding;
+    private Handler myHandler = new Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +126,9 @@ public class QuizActivity extends AppCompatActivity {
             currentButton.setText(getString(currentAnswers[index][0]));
             currentButton.setTag(currentAnswers[index][1]);
         }
+        if (additionalMedia > 0) {
+            setAdditionalViews(radioButtonViewBinding.rootRadioButtons, additionalMedia);
+        }
         quizBindings.rootView.addView(radioButtonViewBinding.rootRadioButtons, 0);
     }
 
@@ -140,6 +148,9 @@ public class QuizActivity extends AppCompatActivity {
             currentButton.setText(getString(currentAnswers[index][0]));
             currentButton.setTag(currentAnswers[index][1]);
         }
+        if (additionalMedia > 0) {
+            setAdditionalViews(checkBoxViewBinding.rootCheckBoxes, additionalMedia);
+        }
         quizBindings.rootView.addView(checkBoxViewBinding.rootCheckBoxes, 0);
     }
 
@@ -154,7 +165,7 @@ public class QuizActivity extends AppCompatActivity {
         openQuestionViewBinding.question.setText(questionId);
         openQuestionViewBinding.answer.setText("");
         if (additionalMedia > 0) {
-            setAdditionalViews(additionalMedia);
+            setAdditionalViews(openQuestionViewBinding.rootOpenQuestion, additionalMedia);
         }
         quizBindings.rootView.addView(openQuestionViewBinding.rootOpenQuestion, 0);
     }
@@ -164,7 +175,7 @@ public class QuizActivity extends AppCompatActivity {
      *
      * @param additionalMedia media type
      */
-    private void setAdditionalViews(int additionalMedia) {
+    private void setAdditionalViews(ViewGroup rootView, int additionalMedia) {
         if (additionalMedia == 1) {
             ImageView questionPicture = new ImageView(this);
             questionPicture.setImageResource(questionsArray[questionNumber][3]);
@@ -175,9 +186,47 @@ public class QuizActivity extends AppCompatActivity {
             int paddingDp = (int) getResources().getDimension(R.dimen.inner_margin);
             int paddingPixel = (int) (paddingDp * density);
             questionPicture.setPadding(paddingPixel, paddingPixel, paddingPixel, paddingPixel);
-            openQuestionViewBinding.rootOpenQuestion.addView(questionPicture, 1);
+            rootView.addView(questionPicture, 1);
+        } else if (additionalMedia == 2) {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            final AudioplayerLayoutBinding audioplayerLayoutBinding = AudioplayerLayoutBinding.inflate(inflater);
+            audioplayerLayoutBinding.rootPlayer.setTag("Additional View");
+            final MediaPlayer audioPlayer = MediaPlayer.create(this, questionsArray[questionNumber][3]);
+            int playerDuration = audioPlayer.getDuration();
+            final Runnable updateSong = new Runnable() {
+                @Override
+                public void run() {
+                    double startTime = audioPlayer.getCurrentPosition();
+                    audioplayerLayoutBinding.seekBar.setProgress((int) startTime);
+                    myHandler.postDelayed(this, 100);
+                }
+            };
+            audioplayerLayoutBinding.seekBar.setMax(playerDuration);
+            audioplayerLayoutBinding.seekBar.setClickable(false);
+            audioplayerLayoutBinding.playButton.setTypeface(FontManager.getTypeface(getApplicationContext(), FontManager.FONTAWESOME));
+            audioplayerLayoutBinding.playButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (audioPlayer.isPlaying()) {
+                        audioplayerLayoutBinding.playButton.setText(R.string.fa_icon_play_solid);
+                        audioPlayer.pause();
+                    } else {
+                        audioplayerLayoutBinding.playButton.setText(R.string.fa_icon_pause_solid);
+                        audioPlayer.start();
+                        double startTime = audioPlayer.getCurrentPosition();
+                        audioplayerLayoutBinding.seekBar.setProgress((int) startTime);
+                        myHandler.postDelayed(updateSong, 100);
+                    }
+                }
+            });
+            audioPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    audioplayerLayoutBinding.playButton.setText(R.string.fa_icon_play_solid);
+                }
+            });
+            rootView.addView(audioplayerLayoutBinding.rootPlayer, 1);
         }
-        // TODO: add MediaPlayer: seekbar and play/pause button
     }
 
     /**

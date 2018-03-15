@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/rootPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/inner_margin"
+        android:paddingRight="@dimen/inner_margin">
+
+        <Button
+            android:id="@+id/play_button"
+            style="@style/Buttons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/fa_icon_play_solid"
+            android:textColor="@color/colorButtonText" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/inner_margin"
+            android:layout_weight="14"
+            android:maxHeight="1000dp" />
+    </LinearLayout>
+
+</layout>

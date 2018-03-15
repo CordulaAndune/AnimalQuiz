@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fa_icon_play_solid" translatable="false">&#xf04b;</string>
+    <string name="fa_icon_pause_solid" translatable="false">&#xf04c;</string>
+</resources>
