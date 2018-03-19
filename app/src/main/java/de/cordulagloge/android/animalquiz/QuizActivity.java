@@ -221,7 +221,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     /**
-     * set additional view for picure or audio player
+     * set additional view for picture or audio player
      *
      * @param additionalMedia media type
      */
@@ -318,6 +318,12 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Check if question is answered correct after clicking next button
+     *
+     * @param answeredQuestionId: id of the current question
+     * @param questionType:       current question type
+     */
     private void checkAnswers(int answeredQuestionId, int questionType) {
         switch (questionType) {
             case (1):
@@ -360,6 +366,10 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Submit the answers: check last question and calculate final score, show toast with score and
+     * go back to start screen
+     */
     private void submitAnswers() {
         checkAnswers(questionsArray[questionNumber][1], questionsArray[questionNumber][0]);
         quizBindings.rootView.removeViewAt(0);
@@ -374,13 +384,14 @@ public class QuizActivity extends AppCompatActivity {
         ToastViewBinding toastViewLayoutBinding = ToastViewBinding.inflate(inflater);
         submitToast.setView(toastViewLayoutBinding.rootToast);
         StringBuilder toastTextBuilder = new StringBuilder();
-        if (score > numberOfQuestions / 0.8) {
+        if (score > (numberOfQuestions * 0.8)) {
             toastTextBuilder.append(getString(R.string.congratulations));
-        } else if (score < numberOfQuestions / 0.2) {
+        } else if (score < (numberOfQuestions * 0.2)) {
             toastTextBuilder.append(getString(R.string.try_again));
         } else {
             toastTextBuilder.append(getString(R.string.good_work));
         }
+        toastTextBuilder.append(" ");
         toastTextBuilder.append(getString(R.string.submit_toast, playersName, score, numberOfQuestions));
         toastViewLayoutBinding.toastText.setText(toastTextBuilder.toString());
         submitToast.setDuration(Toast.LENGTH_SHORT);
