@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data />
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/inner_margin"
-        android:background="@color/colorBackground"
-        tools:context="de.cordulagloge.android.animalquiz.MainActivity">
+        android:background="@color/colorBackground">
 
-        <ImageView
-            android:id="@+id/titleImage"
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/outer_padding"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/title_background"
-            android:src="@drawable/jungle"/>
+            android:orientation="vertical"
+            android:padding="@dimen/inner_margin"
+            tools:context="de.cordulagloge.android.animalquiz.MainActivity">
 
-        <TextView
-            style="@style/QuestionTextStyle"
-            android:text="@string/enter_your_name" />
+            <ImageView
+                android:id="@+id/titleImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/outer_padding"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/title_background"
+                android:src="@drawable/jungle" />
 
-        <EditText
-            android:id="@+id/playersName"
-            style="@style/EditTextStyle"
-            android:hint="@string/your_name"
-            android:inputType="textCapWords"/>
+            <TextView
+                style="@style/QuestionTextStyle"
+                android:text="@string/enter_your_name" />
 
-        <Button
-            android:id="@+id/startButton"
-            style="@style/Buttons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/start_quiz"
-            android:layout_margin="@dimen/outer_padding"/>
+            <EditText
+                android:id="@+id/playersName"
+                style="@style/EditTextStyle"
+                android:hint="@string/your_name"
+                android:inputType="textCapWords" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/startButton"
+                style="@style/Buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/outer_padding"
+                android:text="@string/start_quiz" />
+
+        </LinearLayout>
+    </ScrollView>
 </layout>
