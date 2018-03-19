@@ -15,6 +15,7 @@
     <string name="reset">Reset</string>
     <string name="edit_answer">Answer here…</string>
     <string name="submit">Submit!</string>
+    <string name="next">Next</string>
     <string name="play_button">Play!</string>
     <!-- Questions and answers -->
     <string name="question_lion">Why do lions have manes?</string>
@@ -38,6 +39,11 @@
     <string name="answer_pelican_13l">13 litres</string>
     <string name="answer_pelican_2l">2 litres</string>
     <string name="question_ratite">Name two big flightless birds (ratite, not extinct):</string>
+    <string name="answer_ratite_ostrich">ostrich</string>
+    <string name="answer_ratite_emu">emu</string>
+    <string name="answer_ratite_kiwi">kiwi</string>
+    <string name="answer_ratite_cassowary">cassowary</string>
+    <string name="answer_ratite_rhea">rhea</string>
     <string name="question_giraffe">How many vertebrae have the giraffe\'s neck?</string>
     <string name="answer_giraffe_17">17</string>
     <string name="answer_giraffe_11">11</string>
@@ -55,23 +61,17 @@
     <string name="answer_tiger_sight">Most of the tiger\'s prey do not see colors. The orange and black shaded fur may look like shadows for those animals.</string>
     <string name="answer_tiger_temperature">The black and orange stripes generate a temperature gradient, which leads to air stream. This regulates the body temperature.</string>
     <string name="question_leopard">What kind of animal is that?</string>
-    <string name="title_background">Title background</string>
+    <string name="answer_leopard">leopard</string>
+    <!--submit strings -->
     <string name="toast_image">toast_image</string>
-    <string name="double_submit">You already submitted your Answers. Please reset the quiz first, before you try again!</string>
     <string name="submit_toast">%1$s!\nYou got %2$d out of %3$d correct.</string>
     <string name="try_again">Try again, </string>
+    <string name="congratulations">Congratulations, </string>
+    <string name="good_work">Good work, </string>
+    <!-- string start screen-->
+    <string name="title_background">Title background</string>
     <string name="enter_your_name">Enter your name:</string>
     <string name="your_name">Your name…</string>
     <string name="start_quiz">Start quiz</string>
-    <string name="back">Back</string>
-    <string name="next">Next</string>
-    <string name="answer_ratite_ostrich">ostrich</string>
-    <string name="answer_ratite_emu">emu</string>
-    <string name="answer_ratite_kiwi">kiwi</string>
-    <string name="answer_ratite_cassowary">cassowary</string>
-    <string name="answer_ratite_rhea">rhea</string>
-    <string name="answer_leopard">leopard</string>
-    <string name="congratulations">Congratulations, </string>
-    <string name="good_work">Good work, </string>
     <string name="enter_name_before_start">Please enter your name, before you start the quiz!</string>
 </resources>
