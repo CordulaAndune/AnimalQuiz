@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">ZooQuiz</string>
+    <string name="app_name">Animal Quiz</string>
     <!-- links for Answers -->
     <string name="link_lion"><![CDATA[<a href=\'https://cbs.umn.edu/research/labs/lionresearch/faq\'>Read more…</a>]]></string>
     <string name="link_hummingbird"><![CDATA[<a href=\'https://www.thespruce.com/how-hummingbirds-fly-386446\'>Read more…</a>]]></string>
