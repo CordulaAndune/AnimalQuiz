@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,9 +43,6 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         quizBindings = DataBindingUtil.setContentView(this, R.layout.activity_quiz);
-        questionNumber = -1;
-        Intent startIntent = getIntent();
-        playersName = startIntent.getStringExtra("playersName");
 
         // Array for the questions
         // QuestionType, Question, picture(1) or mp3(2)
@@ -61,8 +57,6 @@ public class QuizActivity extends AppCompatActivity {
                         {3, R.string.question_leopard, 1, R.drawable.leopard},
                         {1, R.string.question_pelican, 0, 0}
                 };
-        numberOfQuestions = questionsArray.length;
-        hasCorrectAnswered = new boolean[numberOfQuestions];
 
         // Hashmap for the answers
         // String of answer + correctness with 0 = false, 1= correct
@@ -91,12 +85,47 @@ public class QuizActivity extends AppCompatActivity {
         openQuestionViewBinding = QuestionOpenLautBinding.inflate(inflater);
         radioButtonViewBinding = QuestionRadiobuttonLayoutBinding.inflate(inflater);
         checkBoxViewBinding = QuestionCheckboxLayoutBinding.inflate(inflater);
-        setNextQuestion();
+
+        // get saved Instance State
+        if (savedInstanceState != null) {
+            questionNumber = savedInstanceState.getInt("questionNumber");
+            playersName = savedInstanceState.getString("playersName");
+            numberOfQuestions = savedInstanceState.getInt("numberOfQuestions");
+            setNextQuestion();
+            hasCorrectAnswered = savedInstanceState.getBooleanArray("hasCorrectAnswered");
+            int questionType = questionsArray[questionNumber][0];
+            if (questionType == 1) {
+                int checkedAnswer = savedInstanceState.getInt("checkedAnswer");
+                RadioButton checkedButton = (RadioButton) radioButtonViewBinding.answerGroup.getChildAt(checkedAnswer);
+                if (checkedButton != null) {
+                    checkedButton.setChecked(true);
+                }
+            } else if (questionType == 2) {
+                boolean[] isChecked = savedInstanceState.getBooleanArray("isChecked");
+                if (isChecked != null) {
+                    int numberOfChilds = checkBoxViewBinding.groupCheckboxes.getChildCount();
+                    for (int index = 0; index < numberOfChilds; index++) {
+                        CheckBox currentCheckBox = (CheckBox) checkBoxViewBinding.groupCheckboxes.getChildAt(index);
+                        currentCheckBox.setChecked(isChecked[index]);
+                    }
+                }
+            }
+        } else {
+            questionNumber = 0;
+            Intent startIntent = getIntent();
+            playersName = startIntent.getStringExtra("playersName");
+            numberOfQuestions = questionsArray.length;
+            hasCorrectAnswered = new boolean[numberOfQuestions];
+            setNextQuestion();
+        }
 
         // set onclicklisteners for all buttons
         quizBindings.nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                checkAnswers(questionsArray[questionNumber][1], questionsArray[questionNumber][0]);
+                quizBindings.rootView.removeViewAt(0);
+                questionNumber++;
                 setNextQuestion();
             }
         });
@@ -108,7 +137,28 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-    //TODO: save oninstance change
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("questionNumber", questionNumber);
+        savedInstanceState.putInt("numberOfQuestions", numberOfQuestions);
+        savedInstanceState.putBooleanArray("hasCorrectAnswered", hasCorrectAnswered);
+        savedInstanceState.putString("playersName", playersName);
+        int questionType = questionsArray[questionNumber][0];
+        if (questionType == 1) {
+            int checkedAnswer = radioButtonViewBinding.answerGroup.getCheckedRadioButtonId();
+            RadioButton checkedButton = (RadioButton) radioButtonViewBinding.rootRadioButtons.findViewById(checkedAnswer);
+            savedInstanceState.putInt("checkedAnswer", radioButtonViewBinding.answerGroup.indexOfChild(checkedButton));
+        } else if (questionType == 2) {
+            int numberOfChilds = checkBoxViewBinding.groupCheckboxes.getChildCount();
+            boolean[] isChecked = new boolean[numberOfChilds];
+            for (int index = 0; index < numberOfChilds; index++) {
+                CheckBox currentCheckbox = (CheckBox) checkBoxViewBinding.groupCheckboxes.getChildAt(index);
+                isChecked[index] = currentCheckbox.isChecked();
+            }
+            savedInstanceState.putBooleanArray("isChecked", isChecked);
+        }
+    }
 
     /**
      * show single choice question with radio buttons
@@ -244,16 +294,8 @@ public class QuizActivity extends AppCompatActivity {
      * get the next question and set new layout
      */
     private void setNextQuestion() {
-        if (questionNumber >= 0) {
-            checkAnswers(questionsArray[questionNumber][1], questionsArray[questionNumber][0]);
-            Log.i("QuizActivity", "Last answer" + hasCorrectAnswered[questionNumber]);
-        }
-        questionNumber++;
         int currentQuestion = questionsArray[questionNumber][1];
         int media = questionsArray[questionNumber][2];
-        if (questionNumber > 0) {
-            quizBindings.rootView.removeViewAt(0);
-        }
         switch (questionsArray[questionNumber][0]) {
             case (1):
                 showRadioButtons(currentQuestion, answerDictionary.get(currentQuestion), media);
@@ -320,6 +362,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void submitAnswers() {
         checkAnswers(questionsArray[questionNumber][1], questionsArray[questionNumber][0]);
+        quizBindings.rootView.removeViewAt(0);
         int score = 0;
         for (boolean isCorrect : hasCorrectAnswered) {
             if (isCorrect) {
