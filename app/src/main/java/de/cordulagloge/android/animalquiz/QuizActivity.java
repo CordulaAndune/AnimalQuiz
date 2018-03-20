@@ -38,12 +38,10 @@ public class QuizActivity extends AppCompatActivity {
     private QuestionOpenLautBinding openQuestionViewBinding;
     private Handler myHandler = new Handler();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         quizBindings = DataBindingUtil.setContentView(this, R.layout.activity_quiz);
-
         // Array for the questions
         // QuestionType, Question, picture(1) or mp3(2)
         // questiontype: 1: RadioButtons, 2: CheckBoxes, 3: open questions
@@ -57,7 +55,6 @@ public class QuizActivity extends AppCompatActivity {
                         {3, R.string.question_leopard, 1, R.drawable.leopard},
                         {1, R.string.question_pelican, 0, 0}
                 };
-
         // Hashmap for the answers
         // String of answer + correctness with 0 = false, 1= correct
         answerDictionary = new HashMap<>();
@@ -79,13 +76,11 @@ public class QuizActivity extends AppCompatActivity {
                 {R.string.answer_ratite_emu, 2}, {R.string.answer_ratite_kiwi, 2},
                 {R.string.answer_ratite_cassowary, 2}, {R.string.answer_ratite_rhea, 2}});
         answerDictionary.put(R.string.question_leopard, new int[][]{{R.string.answer_leopard, 1}});
-
         // get all layouts for the different question types
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         openQuestionViewBinding = QuestionOpenLautBinding.inflate(inflater);
         radioButtonViewBinding = QuestionRadiobuttonLayoutBinding.inflate(inflater);
         checkBoxViewBinding = QuestionCheckboxLayoutBinding.inflate(inflater);
-
         // get saved Instance State
         if (savedInstanceState != null) {
             questionNumber = savedInstanceState.getInt("questionNumber");
@@ -118,7 +113,6 @@ public class QuizActivity extends AppCompatActivity {
             hasCorrectAnswered = new boolean[numberOfQuestions];
             setNextQuestion();
         }
-
         // set onclicklisteners for all buttons
         quizBindings.nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +177,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     /**
-     * show mulstiple choice question with check boxes
+     * show multiple choice question with check boxes
      *
      * @param questionId      string-id of the question
      * @param currentAnswers  answers of the questions
@@ -316,6 +310,7 @@ public class QuizActivity extends AppCompatActivity {
                 }
             });
         }
+        quizBindings.rootView.fullScroll(View.FOCUS_UP);
     }
 
     /**
@@ -406,5 +401,4 @@ public class QuizActivity extends AppCompatActivity {
         Intent startIntent = new Intent(this, MainActivity.class);
         startActivity(startIntent);
     }
-
 }
